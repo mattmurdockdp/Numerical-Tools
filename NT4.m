@@ -49,8 +49,7 @@ for k=1:iter
 
     Gradient = (-1/N)*sum;
     Grad_save(k)=norm(Gradient);
-    Theta_new = Theta_old+tau*Gradient';
-    Theta_old=Theta_new;
+    Theta_old = Theta_old+tau*Gradient';
 
     % Cost
     sum_cost = 0;
@@ -70,7 +69,7 @@ plot(1:iter,Cost)
 title('Cost')
 
 % Decision Line
-Decision = -Theta_old(1)/Theta_old(2)*x2;
+Decision = -Theta_old(1)/Theta_old(2)*x1;
 
 figure;
 scatter(x1,x2)
