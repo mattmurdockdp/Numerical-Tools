@@ -213,7 +213,7 @@ end
 Theta_quadratic = randn(N_dim, N_sectors) * 0.1;
 
 % Gradient descent parameters
-tau = 0.0001;
+tau = 0.001;
 iter = 200;
 Lambda = 0.01;
 Cost_quad = zeros(iter,1);
