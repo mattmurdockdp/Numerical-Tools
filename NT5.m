@@ -213,8 +213,8 @@ end
 Theta_quadratic = randn(N_dim, N_sectors) * 0.1;
 
 % Gradient descent parameters
-tau = 0.001;
-iter = 200;
+tau = 0.00001;
+iter = 400;
 Lambda = 0.01;
 Cost_quad = zeros(iter,1);
 Grad_save_quad = zeros(iter, N_sectors);
@@ -251,13 +251,16 @@ for k = 1:iter
     sum_cost = 0;
     for i = 1:N_train
         for j = 1:N_sectors
-            sum_cost = sum_cost + ...
-                (1 - Y(i,j)) * (-log(1 - g_quad(i,j))) + ...
-                 Y(i,j)  * (-log(g_quad(i,j))) + ...
-                 Lambda * (Theta_quadratic(:,j)' * Theta_quadratic(:,j));
+            sum_cost = sum_cost + (1 - Y(i,j)) * (-log(1 - g_quad(i,j))) + Y(i,j)  * (-log(g_quad(i,j)));
         end
     end
-    Cost_quad(k,1) = (1/N_train) * sum_cost;
+    
+    reg_term = 0;
+    for j=1:N_sectors
+        reg_term = reg_term + Lambda * sum(Theta_quadratic(:,j).^2);
+    end
+
+    Cost_quad(k,1) = (1/N_train) * sum_cost + reg_term;
 end
 
 % Plot cost for quadratic model
