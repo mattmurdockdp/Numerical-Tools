@@ -27,9 +27,8 @@ y  = [y_sector1; y_sector2; y_sector3];
 
 D = [x1, x2, y];
 
-% Colors for each sector
-colors = lines(3); 
-
+% % Colors for each sector
+% % colors = lines(3); 
 % % Points
 % % figure;
 % % hold on;
