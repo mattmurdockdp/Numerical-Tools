@@ -34,7 +34,7 @@ for i = 1:M
 end
 
 % Plot data and L2 regression line
-figure;
+fig = figure;
 hold on;
 scatter(x, y, 50, 'b', 'o', 'filled'); % Plot noisy data points
 plot(x, A * theta_now, 'r-', 'LineWidth', 2); % L1 regression line
@@ -45,9 +45,11 @@ legend('Noisy Data', 'L2 Regression Line', 'Location', 'Best');
 grid on;
 set(gca, 'FontSize', 12);
 hold off;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT2Fig4.png', 'BackgroundColor', 'white');
 
 % Plot f_values and grad_values
-figure;
+fig = figure;
 yyaxis left;
 plot(1:M, f_values, 'b-', 'LineWidth', 2);
 ylabel('f_{now}');
@@ -62,15 +64,18 @@ title('Convergence of f_{now} and ||grad_{now}||');
 legend('f_{now}', '||grad_{now}||');
 grid on;
 hold off;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT2Fig5.png', 'BackgroundColor', 'white');
 
 % Plot error L2
-figure;
+fig = figure;
 bar(x,abs(y-A*theta_now),'b')
 xlabel('x');
 ylabel('Error Magnitude');
 title('Error magnitude for L2 norm');
 grid on;
-
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT2Fig6.png', 'BackgroundColor', 'white');
 
 %% L1 norm - linprog
 
@@ -84,13 +89,14 @@ errL1 = abs(y-X*thetaL1);
 
 
 % Plot error L1
-figure;
+fig = figure;
 bar(x,errL1,'b')
 xlabel('x');
 ylabel('Error Magnitude');
 title('Error magnitude for L1 norm');
 grid on;
-
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT2Fig7.png', 'BackgroundColor', 'white');
 
 
 
@@ -105,9 +111,11 @@ thetaLinf = sol(1:2,1);
 errLinf = abs(y-X*thetaLinf);
 
 % Plot error Linf
-figure;
+fig = figure;
 bar(x,errLinf,'b')
 xlabel('x');
 ylabel('Error Magnitude');
 title('Error magnitude for L_{inf} norm');
 grid on;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT2Fig8.png', 'BackgroundColor', 'white');

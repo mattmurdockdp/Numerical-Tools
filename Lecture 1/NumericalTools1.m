@@ -50,7 +50,7 @@ for i=1:M
 end
 
 % Plot f_values and grad_values
-figure;
+fig = figure;
 plot(1:M, f_values, 'b-', 'LineWidth', 2, 'MarkerSize', 6);
 hold on;
 plot(1:M, grad_values, 'r-', 'LineWidth', 2, 'MarkerSize', 6);
@@ -61,6 +61,8 @@ ylabel('Value');
 title('Convergence of f_{now} and ||grad_{now}||');
 legend('f_{now}', '||grad_{now}||');
 grid on;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT1Fig1.png', 'BackgroundColor', 'white');
 
 % n < m
 theta_now = [0;0;0];
@@ -75,7 +77,7 @@ for i=1:M
 end
 
 % Plot f_values and grad_values
-figure;
+fig = figure;
 plot(1:M, f_values, 'b-', 'LineWidth', 2, 'MarkerSize', 6);
 hold on;
 plot(1:M, grad_values, 'r-', 'LineWidth', 2, 'MarkerSize', 6);
@@ -86,6 +88,8 @@ ylabel('Value');
 title('Convergence of f_{now} and ||grad_{now}||');
 legend('f_{now}', '||grad_{now}||');
 grid on;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT1Fig2.png', 'BackgroundColor', 'white');
 
 % n > m
 theta_now = [0;0;0];
@@ -100,7 +104,7 @@ for i=1:M
 end
 
 % Plot f_values and grad_values
-figure;
+fig = figure;
 plot(1:M, f_values, 'b-', 'LineWidth', 2, 'MarkerSize', 6);
 hold on;
 plot(1:M, grad_values, 'r-', 'LineWidth', 2, 'MarkerSize', 6);
@@ -111,3 +115,5 @@ ylabel('Value');
 title('Convergence of f_{now} and ||grad_{now}||');
 legend('f_{now}', '||grad_{now}||');
 grid on;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT1Fig3.png', 'BackgroundColor', 'white');
