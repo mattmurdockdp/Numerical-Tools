@@ -27,20 +27,18 @@ y  = [y_sector1; y_sector2; y_sector3];
 
 D = [x1, x2, y];
 
-% % Colors for each sector
-% % colors = lines(3); 
-% % Points
-% % figure;
-% % hold on;
-% % scatter(x1(y==1), x2(y==1), 50, colors(1,:), 'filled'); % Sector 1
-% % scatter(x1(y==2), x2(y==2), 50, colors(2,:), 'filled'); % Sector 2
-% % scatter(x1(y==3), x2(y==3), 50, colors(3,:), 'filled'); % Sector 3
-% % hold off;
-% % xlabel('x1');
-% % ylabel('x2');
-% % title('Distribución de puntos en los 3 sectores');
-% % legend({'Sector 1', 'Sector 2', 'Sector 3'}, 'Location', 'best');
-% % grid on;
+colors = lines(3); 
+figure;
+hold on;
+scatter(x1(y==1), x2(y==1), 50, colors(1,:), 'filled'); % Sector 1
+scatter(x1(y==2), x2(y==2), 50, colors(2,:), 'filled'); % Sector 2
+scatter(x1(y==3), x2(y==3), 50, colors(3,:), 'filled'); % Sector 3
+hold off;
+xlabel('x1');
+ylabel('x2');
+title('3 sector distribution');
+legend({'Sector 1', 'Sector 2', 'Sector 3'}, 'Location', 'best');
+grid on;
 
 %% Divide the data into train data (70% of D) and test data (30% of D)
 
