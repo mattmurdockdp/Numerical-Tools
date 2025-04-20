@@ -127,18 +127,6 @@ grid on;
 set(fig, 'Color', 'w');
 exportgraphics(fig, 'NT3Fig6.png', 'BackgroundColor', 'white');
 
-% Ridge Regression using polynomial features of degree 3
-max_degree = 3;
-lambda = 0.1;  % Regularization parameter
-
-% Construct polynomial features for training and test sets
-X_ridge_train = ones(N, max_degree + 1);
-X_ridge_test = ones(size(x_test, 1), max_degree + 1);
-for k = 1:max_degree
-    X_ridge_train(:, k+1) = x_train.^k;
-    X_ridge_test(:, k+1) = x_test.^k;
-end
-
 %% Cross-Validation on Polynomial Regression
 
 clear; close all; clc;
