@@ -28,7 +28,7 @@ y  = [y_sector1; y_sector2; y_sector3];
 D = [x1, x2, y];
 
 colors = lines(3); 
-figure;
+fig = figure;
 hold on;
 scatter(x1(y==1), x2(y==1), 50, colors(1,:), 'filled'); % Sector 1
 scatter(x1(y==2), x2(y==2), 50, colors(2,:), 'filled'); % Sector 2
@@ -39,6 +39,8 @@ ylabel('x2');
 title('3 sector distribution');
 legend({'Sector 1', 'Sector 2', 'Sector 3'}, 'Location', 'best');
 grid on;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT5Fig5.png', 'BackgroundColor', 'white');
 
 %% Divide the data into train data (70% of D) and test data (30% of D)
 
@@ -140,15 +142,17 @@ for k=1:iter
 end
 
 % Cost function
-figure;
+fig = figure;
 plot(1:iter, Cost, 'LineWidth', 2);
 xlabel('Iteration');
 ylabel('Cost');
 title('Cost evolution for linear model');
 grid on;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT5Fig6.png', 'BackgroundColor', 'white');
 
 % Gradient norm per class
-figure;
+fig = figure;
 hold on;
 for j = 1:N_sectors
     plot(1:iter, Grad_save(:,j), 'LineWidth', 2, 'DisplayName', ['Class ', num2str(j)]);
@@ -158,15 +162,18 @@ ylabel('Gradient norm');
 title('Gradient norm evolution per class for linear model');
 legend('show');
 grid on;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT5Fig7.png', 'BackgroundColor', 'white');
 
 % Define the range of x1 for plotting the decision boundaries
-x1_range = linspace(min(x1)-5, max(x1)+5, 200);
+x1_range = linspace(min(x1), max(x1), 100);
 
 % Colors for each class
 colors = lines(N_sectors); 
 
 % Plot all data points (filled)
-figure; hold on;
+fig = figure; 
+hold on;
 scatter(x1(y==1), x2(y==1), 50, colors(1,:), 'filled');
 scatter(x1(y==2), x2(y==2), 50, colors(2,:), 'filled');
 scatter(x1(y==3), x2(y==3), 50, colors(3,:), 'filled');
@@ -191,6 +198,8 @@ title('Data points with decision boundaries and training set for linear model');
 legend({'Sector 1', 'Sector 2', 'Sector 3', 'Training points'}, 'Location', 'best');
 grid on;
 axis tight;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT5Fig8.png', 'BackgroundColor', 'white');
 
 %% Solve logistic regression considering quadratic model x = [1, x1, x2, x1^2, x1*x2, x2^2]
 
@@ -261,15 +270,17 @@ for k = 1:iter
 end
 
 % Plot cost for quadratic model
-figure;
+fig = figure;
 plot(1:iter, Cost_quad, 'LineWidth', 2);
 xlabel('Iteration');
 ylabel('Cost');
 title('Cost evolution for quadratic model');
 grid on;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT5Fig9.png', 'BackgroundColor', 'white');
 
 % Plot gradient norms for each sector
-figure;
+fig = figure;
 hold on;
 for j = 1:N_sectors
     plot(1:iter, Grad_save_quad(:,j), 'LineWidth', 2);
@@ -280,6 +291,50 @@ title('Gradient norm evolution for quadratic model');
 legend({'Sector 1', 'Sector 2', 'Sector 3'}, 'Location', 'best');
 grid on;
 hold off;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT5Fig10.png', 'BackgroundColor', 'white');
 
+%% Plot activation boundaries h_j(x) = 0 for each class (in different colors)
+
+fig = figure;
+hold on;
+
+% Plot data points
+scatter(x1(y==1), x2(y==1), 50, colors(1,:), 'filled');
+scatter(x1(y==2), x2(y==2), 50, colors(2,:), 'filled');
+scatter(x1(y==3), x2(y==3), 50, colors(3,:), 'filled');
+
+% Overlay training points
+scatter(x1_train, x2_train, 70, 'k', 'LineWidth', 1.5);
+
+% Create a grid for plotting
+[x1_grid, x2_grid] = meshgrid(linspace(min(x1), max(x1), 300), ...
+                              linspace(min(x2), max(x2), 300));
+x1_flat = x1_grid(:);
+x2_flat = x2_grid(:);
+
+% Build the quadratic input matrix for the grid
+X_quad_grid = [ones(size(x1_flat)), ...
+               x1_flat, ...
+               x2_flat, ...
+               x1_flat.^2, ...
+               x1_flat .* x2_flat, ...
+               x2_flat.^2];
+
+% Plot h_j(x) = 0 for each class in a different color
+for j = 1:N_sectors
+    h_j = reshape(X_quad_grid * Theta_quadratic(:,j), size(x1_grid));
+    contour(x1_grid, x2_grid, h_j, [0 0], '--', 'LineWidth', 2, ...
+        'LineColor', colors(j,:), ...
+        'DisplayName', ['h_', num2str(j), '(x) = 0']);
+end
+
+xlabel('x1');
+ylabel('x2');
+title('Quadratic model: h_j(x) = 0 contours');
+legend('Location', 'bestoutside');
+grid on;
+set(fig, 'Color', 'w');
+exportgraphics(fig, 'NT5Fig12.png', 'BackgroundColor', 'white');
 
 
