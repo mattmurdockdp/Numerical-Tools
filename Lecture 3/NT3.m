@@ -139,42 +139,6 @@ for k = 1:max_degree
     X_ridge_test(:, k+1) = x_test.^k;
 end
 
-%% Solve Ridge Regression: Theta = inv(X'*X + lambda*I) * X'*y
-I = eye(max_degree + 1);
-Theta_ridge = (X_ridge_train' * X_ridge_train + lambda * I) \ (X_ridge_train' * y_train);
-
-% Predictions
-y_est_train_ridge = X_ridge_train * Theta_ridge;
-y_est_test_ridge = X_ridge_test * Theta_ridge;
-
-% MSE calculations
-MSE_train_ridge = mean((y_train - y_est_train_ridge).^2);
-MSE_test_ridge = mean((y_test - y_est_test_ridge).^2);
-
-% Plot Ridge Regression predictions
-fig = figure;
-hold on;
-scatter(x_train, y_train, 40, 'b', 'filled');
-scatter(x_test, y_test, 40, 'r', 'filled');
-
-% Smooth prediction line
-x_range = linspace(min(x_train), max(x_train), 100)';
-X_range = ones(length(x_range), max_degree + 1);
-for k = 1:max_degree
-    X_range(:, k+1) = x_range.^k;
-end
-y_range = X_range * Theta_ridge;
-
-plot(x_range, y_range, 'k-', 'LineWidth', 2);
-xlabel('x');
-ylabel('y');
-legend('Train data', 'Test data', 'Ridge prediction');
-title(['Ridge Regression (degree = ', num2str(max_degree), ', \lambda = ', num2str(lambda), ')']);
-grid on;
-hold off;
-set(fig, 'Color', 'w');
-exportgraphics(fig, 'NT3Fig7.png', 'BackgroundColor', 'white');
-
 %% Cross-Validation on Polynomial Regression
 
 clear; close all; clc;
@@ -238,7 +202,7 @@ title('Cross-Validation: Mean ± 1.96 Std of Test MSE');
 grid on;
 legend;
 set(fig, 'Color', 'w');
-exportgraphics(fig, 'NT3Fig8.png', 'BackgroundColor', 'white');
+exportgraphics(fig, 'NT3Fig7.png', 'BackgroundColor', 'white');
 
 %% Ridge Regression with high capacity
 lambda = 1; % Ridge regularization parameter
@@ -270,6 +234,6 @@ xlabel('x'); ylabel('y');
 legend('Data', 'Ridge fit');
 grid on;
 set(fig, 'Color', 'w');
-exportgraphics(fig, 'NT3Fig9.png', 'BackgroundColor', 'white');
+exportgraphics(fig, 'NT3Fig8.png', 'BackgroundColor', 'white');
 
 
